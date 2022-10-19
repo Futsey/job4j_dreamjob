@@ -57,11 +57,11 @@ public class Candidate {
             return false;
         }
         Candidate candidate = (Candidate) o;
-        return id == candidate.id && Objects.equals(created, candidate.created);
+        return id == candidate.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, created);
+        return Objects.hash(id);
     }
 }
