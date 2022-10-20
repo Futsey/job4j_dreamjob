@@ -16,6 +16,7 @@
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
     <title>Работа мечты! КАНДИДАТЫ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 <div class="container">
@@ -44,10 +45,13 @@
             </thead>
             <tbody>
             <tr th:each="candidate: ${candidates}">
-                <td th:text="${candidate.id}" />
-                <td th:text="${candidate.name}" />
-                <td th:text="${candidate.desc}" />
-                <td th:text="${candidate.created}" />
+                <td th:text="${candidate.id}"></td>
+                <td>
+                    <a th:href="@{|/formUpdateCandidates/${candidate.id}|}">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                    <span th:text="${candidate.name}"></span>
+                </td>
             </tr>
             </tbody>
         </table>
