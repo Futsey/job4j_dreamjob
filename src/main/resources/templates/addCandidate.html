@@ -40,10 +40,12 @@
                 Новый кандидат.
             </div>
             <div class="card-body">
-                <form th:action="@{/createCandidate}" method="POST">
+                <form th:action="@{/createCandidate}" method="POST" th:object="${candidate}">
                     <div class="form-group">
                         <label for="name">Имя</label>
-                        <input type="text" class="form-control" name="name" id="name">
+                        <input placeholder = "Введите наименование вакансии" type="text" class="form-control" name="name" id="name" th:field="*{name}">
+                        <label for="name">Описание</label>
+                        <input placeholder = "Введите описание вакансии" type="text" class="form-control" name="description" id="description" th:field="*{desc}">
                     </div>
                     <button type="submit" class="btn btn-primary">Сохранить</button>
                 </form>
