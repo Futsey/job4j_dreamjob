@@ -41,14 +41,14 @@
             </div>
             <div class="card-body">
                 <form th:action="@{/createCandidate}" method="POST" th:object="${candidate}">
+                    <input type="hidden" name="id" th:field="*{id}"/>
                     <div class="form-group">
                         <label for="name">Имя</label>
-                        <input placeholder = "Введите наименование вакансии" type="text" class="form-control" name="name" id="name" th:field="*{name}">
+                        <input type="text" class="form-control" name="name" id="name" th:placeholder="*{name}">
                         <label for="name">Описание</label>
-                        <input placeholder = "Введите описание вакансии" type="text" class="form-control" name="description" id="description" th:field="*{desc}">
+                        <input type="text" class="form-control" name="description" id="description" th:placeholder="*{desc}">
                     </div>
                     <button type="submit" class="btn btn-primary">Сохранить</button>
-                </form>
             </div>
         </div>
     </div>

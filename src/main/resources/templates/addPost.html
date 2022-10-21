@@ -44,9 +44,9 @@
                     <input type="hidden" name="id" value="0"/>
                     <div class="form-group">
                         <label for="name">Имя</label>
-                        <input placeholder = "Введите наименование вакансии" type="text" class="form-control" name="name" id="name" th:field="*{name}">
+                        <input type="text" class="form-control" name="name" id="name" th:placeholder="*{name}">
                         <label for="name">Описание</label>
-                        <input placeholder = "Введите описание вакансии" type="text" class="form-control" name="description" id="description" th:field="*{description}">
+                        <input type="text" class="form-control" name="description" id="description" th:placeholder="*{description}">
                     </div>
                     <button type="submit" class="btn btn-primary">Сохранить</button>
                 </form>

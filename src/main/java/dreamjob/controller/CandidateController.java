@@ -1,7 +1,6 @@
 package dreamjob.controller;
 
 import dreamjob.model.Candidate;
-import dreamjob.model.Post;
 import dreamjob.store.CandidateStore;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,10 +9,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.time.LocalDateTime;
+
 @Controller
 public class CandidateController {
 
     private final CandidateStore candidateController = CandidateStore.instOf();
+
+    @GetMapping("/formAddCandidate")
+    public String addCandidate(Model model) {
+        model.addAttribute("candidate",
+                new Candidate(0, "Введите имя кандидата", "Заполните описание", LocalDateTime.now()));
+        return "addCandidate";
+    }
 
     @GetMapping("/candidates")
     public String candidates(Model model) {
