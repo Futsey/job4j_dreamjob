@@ -1,7 +1,7 @@
 package dreamjob.controller;
 
 import dreamjob.model.Candidate;
-import dreamjob.store.CandidateStore;
+import dreamjob.service.CandidateService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +14,11 @@ import java.time.LocalDateTime;
 @Controller
 public class CandidateController {
 
-    private final CandidateStore candidateController = CandidateStore.instOf();
+    private final CandidateService candidateService;
+
+    public CandidateController(CandidateService candidateService) {
+        this.candidateService = candidateService;
+    }
 
     @GetMapping("/formAddCandidate")
     public String addCandidate(Model model) {
@@ -25,25 +29,25 @@ public class CandidateController {
 
     @GetMapping("/candidates")
     public String candidates(Model model) {
-        model.addAttribute("candidates", candidateController.findAll());
+        model.addAttribute("candidates", candidateService.findAll());
         return "candidates";
     }
 
     @PostMapping("/createCandidate")
     public String createCandidate(@ModelAttribute Candidate candidate) {
-        candidateController.add(candidate);
+        candidateService.add(candidate);
         return "redirect:/candidates";
     }
 
     @GetMapping("/formUpdateCandidates/{candidateId}")
     public String formUpdateCandidate(Model model, @PathVariable("candidateId") int id) {
-        model.addAttribute("candidates", candidateController.findById(id));
+        model.addAttribute("candidates", candidateService.findById(id));
         return "updateCandidate";
     }
 
     @PostMapping("/updateCandidate")
     public String updateCandidate(@ModelAttribute Candidate candidate) {
-        candidateController.update(candidate);
+        candidateService.update(candidate);
         return "redirect:/candidates";
     }
 }
