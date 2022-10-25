@@ -1,7 +1,7 @@
 package dreamjob.controller;
 
 import dreamjob.model.Post;
-import dreamjob.services.PostService;
+import dreamjob.service.PostService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

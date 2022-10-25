@@ -1,4 +1,4 @@
-package dreamjob.services;
+package dreamjob.service;
 
 import dreamjob.model.Post;
 import dreamjob.store.PostStore;
