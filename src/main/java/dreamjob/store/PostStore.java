@@ -12,7 +12,7 @@ public class PostStore {
 
     private static final PostStore INST = new PostStore();
     private final Map<Integer, Post> posts = new ConcurrentHashMap<>();
-    private final AtomicInteger idGen = new AtomicInteger(4);
+    private final AtomicInteger idGen = new AtomicInteger(3);
 
     private PostStore() {
         posts.put(1, new Post(1, "Junior Java Job", "Weak Programmer", LocalDateTime.now()));

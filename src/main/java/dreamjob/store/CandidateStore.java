@@ -13,7 +13,7 @@ public class CandidateStore {
 
     private static final CandidateStore INST = new CandidateStore();
     private final Map<Integer, Candidate> candidates = new ConcurrentHashMap<>();
-    private final AtomicInteger idGen = new AtomicInteger(0);
+    private final AtomicInteger idGen = new AtomicInteger(3);
 
     private CandidateStore() {
         candidates.put(1, new Candidate(1, "Andrew", "Intern", LocalDateTime.now()));
