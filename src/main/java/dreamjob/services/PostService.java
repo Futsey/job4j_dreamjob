@@ -2,19 +2,17 @@ package dreamjob.services;
 
 import dreamjob.model.Post;
 import dreamjob.store.PostStore;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
+@Service
 public class PostService {
 
-    private static final PostService INST = new PostService();
-    private final PostStore postStore = PostStore.instOf();
+    private final PostStore postStore;
 
-    private PostService() {
-    }
-
-    public static PostService instOf() {
-        return INST;
+    public PostService(PostStore store) {
+        this.postStore = store;
     }
 
     public Collection<Post> findAll() {
