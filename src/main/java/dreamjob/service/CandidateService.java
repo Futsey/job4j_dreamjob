@@ -1,13 +1,13 @@
 package dreamjob.service;
 
 import dreamjob.model.Candidate;
-import dreamjob.model.Post;
 import dreamjob.store.CandidateStore;
-import dreamjob.store.PostStore;
+import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
+@ThreadSafe
 @Service
 public class CandidateService {
 

@@ -1,6 +1,7 @@
 package dreamjob.store;
 
 import dreamjob.model.Candidate;
+import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -9,6 +10,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@ThreadSafe
 @Repository
 public class CandidateStore {
 

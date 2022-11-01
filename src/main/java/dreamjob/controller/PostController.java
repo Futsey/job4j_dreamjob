@@ -2,6 +2,7 @@ package dreamjob.controller;
 
 import dreamjob.model.Post;
 import dreamjob.service.PostService;
+import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDateTime;
 
+@ThreadSafe
 @Controller
 public class PostController {
 
