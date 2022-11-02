@@ -9,6 +9,7 @@ public class Candidate {
     private String name;
     private String desc;
     private LocalDateTime created;
+    private City city;
 
     public Candidate() {
     }
@@ -46,6 +47,14 @@ public class Candidate {
 
     public LocalDateTime getCreated() {
         return created;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 
     @Override

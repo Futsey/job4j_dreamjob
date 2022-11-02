@@ -1,6 +1,7 @@
 package dreamjob.controller;
 
 import dreamjob.model.Post;
+import dreamjob.service.CityService;
 import dreamjob.service.PostService;
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Controller;
@@ -17,9 +18,11 @@ import java.time.LocalDateTime;
 public class PostController {
 
     private final PostService postService;
+    private final CityService cityService;
 
-    public PostController(PostService postService) {
+    public PostController(PostService postService, CityService cityService) {
         this.postService = postService;
+        this.cityService = cityService;
     }
 
     @GetMapping("/posts")
@@ -32,6 +35,7 @@ public class PostController {
     public String addPost(Model model) {
         model.addAttribute("post",
                 new Post(0, "Введите наименование вакансии", "Введите описание вакансии", LocalDateTime.now()));
+        model.addAttribute("cities", cityService.getAllCities());
         return "addPost";
     }
 
@@ -63,6 +67,7 @@ public class PostController {
     @GetMapping("/formUpdatePost/{postId}")
     public String formUpdatePost(Model model, @PathVariable("postId") int id) {
         model.addAttribute("post", postService.findById(id));
+        model.addAttribute("cities", cityService.getAllCities());
         return "updatePost";
     }
 
