@@ -28,6 +28,7 @@ public class PostController {
     @GetMapping("/posts")
     public String posts(Model model) {
         model.addAttribute("posts", postService.findAll());
+        model.addAttribute("cities", cityService.getAllCities());
         return "posts";
     }
 
@@ -61,6 +62,7 @@ public class PostController {
     @PostMapping("/createPost")
     public String createPost(@ModelAttribute Post post) {
         postService.add(post);
+        post.setCity(cityService.findById(post.getCity().getId()));
         return "redirect:/posts";
     }
 
@@ -74,6 +76,7 @@ public class PostController {
     @PostMapping("/updatePost")
     public String updatePost(@ModelAttribute Post post) {
         postService.update(post);
+        post.setCity(cityService.findById(post.getCity().getId()));
         return "redirect:/posts";
     }
 }
