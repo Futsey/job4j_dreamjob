@@ -40,13 +40,17 @@
                 Редактирование кандидата.
             </div>
             <div class="card-body">
-                <form th:action="@{/updateCandidate}" method="POST" th:object="${candidates}">
+                <form th:action="@{/updateCandidate}" method="POST" th:object="${candidates}" enctype="multipart/form-data">
                         <input type="hidden" name="id" th:field="*{id}"/>
                     <div class="form-group">
                         <label for="name">Имя</label>
                         <input type="text" class="form-control" name="name" id="name" th:field="*{name}">
                         <label for="name">Описание</label>
                         <input type="text" class="form-control" name="description" id="description" th:field="*{desc}">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Фотография</label>
+                        <input type="file" class="form-control" name="file" id="file">
                     </div>
                     <div class="form-group">
                         <label for="city.id">Город</label>
