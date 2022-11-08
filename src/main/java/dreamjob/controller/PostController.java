@@ -1,6 +1,5 @@
 package dreamjob.controller;
 
-import dreamjob.store.PostDBStore;
 import dreamjob.model.Post;
 import dreamjob.service.CityService;
 import dreamjob.store.PostStore;
