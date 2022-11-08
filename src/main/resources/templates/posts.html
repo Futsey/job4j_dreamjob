@@ -33,12 +33,6 @@
                 <a class="nav-item nav-link" th:href="@{/candidates}">Кандидаты</a>
                 <a class="nav-item nav-link" th:href="@{/formAddCandidate}">Добавить кандидата</a>
             </div>
-            <div class="form-group">
-                <label for="city.id">Город</label>
-                <select class="form-control" id="city.id" name="city.id">
-                    <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.name}"></option>
-                </select>
-            </div>
         </div>
     </nav>
     <div class="row">
@@ -47,6 +41,7 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Имя</th>
+                <th scope="col">Город</th>
             </tr>
             </thead>
             <tbody>
@@ -60,6 +55,9 @@
                     <span th:if="${!post.visible}">
                         <i class="fa fa-square-o"></i>
                     </span>
+                </td>
+                <td>
+                    <span th:text="${post.city}"></span>
                 </td>
             </tr>
             </tbody>
