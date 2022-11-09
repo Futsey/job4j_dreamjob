@@ -1,6 +1,7 @@
 package dreamjob.store;
 
 import dreamjob.model.Candidate;
+import dreamjob.model.City;
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Repository;
 
@@ -18,9 +19,9 @@ public class CandidateStore {
     private final AtomicInteger idGen = new AtomicInteger(3);
 
     private CandidateStore() {
-        candidates.put(1, new Candidate(1, "Andrew", "Intern", LocalDateTime.now()));
-        candidates.put(2, new Candidate(2, "Stas", "Middle", LocalDateTime.now()));
-        candidates.put(3, new Candidate(3, "Pyotr", "Senior", LocalDateTime.now()));
+        candidates.put(1, new Candidate(1, "Andrew", "Intern", LocalDateTime.now(), new City(7, "Voronezh")));
+        candidates.put(2, new Candidate(2, "Stas", "Middle", LocalDateTime.now(), new City(7, "Surgut")));
+        candidates.put(3, new Candidate(3, "Pyotr", "Senior", LocalDateTime.now(), new City(7, "Orel")));
     }
 
     public Collection<Candidate> findAll() {
