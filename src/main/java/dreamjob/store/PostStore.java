@@ -2,6 +2,7 @@ package dreamjob.store;
 
 import dreamjob.model.City;
 import dreamjob.model.Post;
+import dreamjob.service.CityService;
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Repository;
 
@@ -19,9 +20,9 @@ public class PostStore {
     private final AtomicInteger idGen = new AtomicInteger(3);
 
     private PostStore() {
-        posts.put(1, new Post(1, "Junior Java Job", "Weak Programmer", LocalDateTime.now(), new City(4, "Омск")));
-        posts.put(2, new Post(2, "Middle Java Job", "Average Programmer", LocalDateTime.now(), new City(5, "Новосибирск")));
-        posts.put(3, new Post(3, "Senior Java Job", "Strong Programmer", LocalDateTime.now(), new City(6, "Тюмень")));
+        posts.put(1, new Post(1, "Junior Java Job", "Weak Programmer", LocalDateTime.now(), new CityService(), 1));
+        posts.put(2, new Post(2, "Middle Java Job", "Average Programmer", LocalDateTime.now(), new CityService(), 3));
+        posts.put(3, new Post(3, "Senior Java Job", "Strong Programmer", LocalDateTime.now(), new CityService(), 2));
     }
 
     public Collection<Post> findAll() {

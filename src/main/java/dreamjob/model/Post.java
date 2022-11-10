@@ -1,5 +1,7 @@
 package dreamjob.model;
 
+import dreamjob.service.CityService;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -33,12 +35,12 @@ public class Post implements Serializable {
         this.created = created;
     }
 
-    public Post(int id, String name, String description, LocalDateTime created, City city) {
+    public Post(int id, String name, String description, LocalDateTime created, CityService city, int cityId) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.created = created;
-        this.city = city;
+        this.city = city.findById(cityId);
     }
 
     public int getId() {
