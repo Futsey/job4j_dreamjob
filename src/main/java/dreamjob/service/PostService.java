@@ -1,7 +1,7 @@
 package dreamjob.service;
 
 import dreamjob.model.Post;
-import dreamjob.store.PostStore;
+import dreamjob.store.PostDBStore;
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +11,9 @@ import java.util.Collection;
 @Service
 public class PostService {
 
-    private final PostStore postStore;
+    private final PostDBStore postStore;
 
-    public PostService(PostStore store) {
+    public PostService(PostDBStore store) {
         this.postStore = store;
     }
 
