@@ -2,7 +2,7 @@ package dreamjob.controller;
 
 import dreamjob.model.Post;
 import dreamjob.service.CityService;
-import dreamjob.store.PostStore;
+import dreamjob.store.PostDBStore;
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,10 +17,10 @@ import java.time.LocalDateTime;
 @Controller
 public class PostController {
 
-    private final PostStore postService;
+    private final PostDBStore postService;
     private final CityService cityService;
 
-    public PostController(PostStore postService, CityService cityService) {
+    public PostController(PostDBStore postService, CityService cityService) {
         this.postService = postService;
         this.cityService = cityService;
     }

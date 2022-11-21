@@ -7,10 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +19,9 @@ public class PostDBStore {
     private static final Logger LOG = LoggerFactory.getLogger(PostDBStore.class.getName());
     private static final String SELECTALL = "SELECT * FROM post";
     private static final String SELECTBYID = "SELECT * FROM post WHERE id = ?";
-    private static final String INSERT = "INSERT INTO post(name) VALUES (?)";
-    private static final String UPDATE = "UPDATE post SET name = ?, description = ?, created = ?, city = ?"
-            + " WHERE id = ?";
+    private static final String INSERT = "INSERT INTO post(name, description, created, visible, city_id) "
+            + "VALUES (?, ?, ?, ?, ?)";
+    private static final String UPDATE = "UPDATE post SET name = ?, description = ?, created = ?, city = ? WHERE id = ?";
 
     public PostDBStore(BasicDataSource pool) {
         this.pool = pool;
@@ -46,13 +43,16 @@ public class PostDBStore {
         return posts;
     }
 
-
     public Post add(Post post) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement(INSERT,
                      PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, post.getName());
+            ps.setString(2, post.getDescription());
+            ps.setDate(3, new Date(new java.util.Date().getTime()));
+            ps.setBoolean(4, post.isVisible());
+            ps.setInt(5, post.getCity().getId());
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
                 if (id.next()) {

@@ -21,6 +21,7 @@ public class Post implements Serializable {
     public Post(int id, String name) {
         this.id = id;
         this.name = name;
+        this.created = LocalDateTime.now();
     }
 
     public Post(int id, LocalDateTime created) {
