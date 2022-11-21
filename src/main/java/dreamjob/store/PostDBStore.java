@@ -1,5 +1,6 @@
 package dreamjob.store;
 
+import dreamjob.model.City;
 import dreamjob.model.Post;
 import dreamjob.service.CityService;
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -30,11 +31,14 @@ public class PostDBStore {
     public List<Post> findAll() {
         List<Post> posts = new ArrayList<>();
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement(SELECTALL)
-        ) {
+             PreparedStatement ps = cn.prepareStatement(SELECTALL)) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
-                    posts.add(new Post(it.getInt("id"), it.getString("name")));
+                    posts.add(addNewPost(it.getInt("id"),
+                            it.getString("name"),
+                            it.getString("description"),
+                            it.getObject("created", LocalDateTime.class),
+                            it.getInt("city_id")));
                 }
             }
         } catch (Exception e) {
@@ -50,7 +54,7 @@ public class PostDBStore {
         ) {
             ps.setString(1, post.getName());
             ps.setString(2, post.getDescription());
-            ps.setDate(3, new Date(new java.util.Date().getTime()));
+            ps.setDate(3, getCurrentDate());
             ps.setBoolean(4, post.isVisible());
             ps.setInt(5, post.getCity().getId());
             ps.execute();
@@ -101,5 +105,10 @@ public class PostDBStore {
 
     private Post addNewPost(int id, String name, String decsription, LocalDateTime created, int cityId) {
         return new Post(id, name, decsription, created, new CityService().findById(cityId));
+    }
+
+    private static java.sql.Date getCurrentDate() {
+        java.util.Date today = new java.util.Date();
+        return new java.sql.Date(today.getTime());
     }
 }
