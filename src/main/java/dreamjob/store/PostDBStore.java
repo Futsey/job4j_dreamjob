@@ -1,6 +1,5 @@
 package dreamjob.store;
 
-import dreamjob.model.City;
 import dreamjob.model.Post;
 import dreamjob.service.CityService;
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -17,15 +16,17 @@ import java.util.List;
 public class PostDBStore {
 
     private final BasicDataSource pool;
+    private final CityService cityService;
     private static final Logger LOG = LoggerFactory.getLogger(PostDBStore.class.getName());
     private static final String SELECTALL = "SELECT * FROM post";
     private static final String SELECTBYID = "SELECT * FROM post WHERE id = ?";
     private static final String INSERT = "INSERT INTO post(name, description, created, visible, city_id) "
             + "VALUES (?, ?, ?, ?, ?)";
-    private static final String UPDATE = "UPDATE post SET name = ?, description = ?, created = ?, city = ? WHERE id = ?";
+    private static final String UPDATE = "UPDATE post SET name = ?, description = ?, created = ?, city_id = ? WHERE id = ?";
 
-    public PostDBStore(BasicDataSource pool) {
+    public PostDBStore(BasicDataSource pool, CityService cityService) {
         this.pool = pool;
+        this.cityService = cityService;
     }
 
     public List<Post> findAll() {
@@ -54,7 +55,7 @@ public class PostDBStore {
         ) {
             ps.setString(1, post.getName());
             ps.setString(2, post.getDescription());
-            ps.setDate(3, getCurrentDate());
+            ps.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
             ps.setBoolean(4, post.isVisible());
             ps.setInt(5, post.getCity().getId());
             ps.execute();
@@ -74,7 +75,7 @@ public class PostDBStore {
              PreparedStatement ps = cn.prepareStatement(UPDATE)) {
             ps.setString(1, post.getName());
             ps.setString(2, post.getDescription());
-            ps.setTimestamp(3, Timestamp.valueOf(post.getCreated()));
+            ps.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
             ps.setInt(4, post.getCity().getId());
             ps.setInt(5, post.getId());
             ps.execute();
@@ -104,11 +105,6 @@ public class PostDBStore {
     }
 
     private Post addNewPost(int id, String name, String decsription, LocalDateTime created, int cityId) {
-        return new Post(id, name, decsription, created, new CityService().findById(cityId));
-    }
-
-    private static java.sql.Date getCurrentDate() {
-        java.util.Date today = new java.util.Date();
-        return new java.sql.Date(today.getTime());
+        return new Post(id, name, decsription, created, cityService.findById(cityId));
     }
 }
