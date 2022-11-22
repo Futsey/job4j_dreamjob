@@ -14,9 +14,6 @@ public class Post implements Serializable {
     private boolean visible;
     private City city;
 
-    public Post() {
-    }
-
     public Post(ResultSet resultSet) {
     }
 

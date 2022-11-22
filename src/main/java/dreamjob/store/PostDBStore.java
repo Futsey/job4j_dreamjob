@@ -2,7 +2,6 @@ package dreamjob.store;
 
 import dreamjob.model.City;
 import dreamjob.model.Post;
-import dreamjob.service.CityService;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
