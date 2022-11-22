@@ -1,7 +1,7 @@
 package dreamjob.model;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.sql.ResultSet;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -15,6 +15,9 @@ public class Post implements Serializable {
     private City city;
 
     public Post() {
+    }
+
+    public Post(ResultSet resultSet) {
     }
 
     public Post(int id, String name) {

@@ -1,5 +1,6 @@
 package dreamjob.store;
 
+import dreamjob.model.City;
 import dreamjob.model.Post;
 import dreamjob.service.CityService;
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -16,30 +17,24 @@ import java.util.List;
 public class PostDBStore {
 
     private final BasicDataSource pool;
-    private final CityService cityService;
     private static final Logger LOG = LoggerFactory.getLogger(PostDBStore.class.getName());
-    private static final String SELECTALL = "SELECT * FROM post";
-    private static final String SELECTBYID = "SELECT * FROM post WHERE id = ?";
+    private static final String SELECT_ALL = "SELECT * FROM post";
+    private static final String SELECT_BY_ID = "SELECT * FROM post WHERE id = ?";
     private static final String INSERT = "INSERT INTO post(name, description, created, visible, city_id) "
             + "VALUES (?, ?, ?, ?, ?)";
     private static final String UPDATE = "UPDATE post SET name = ?, description = ?, created = ?, city_id = ? WHERE id = ?";
 
-    public PostDBStore(BasicDataSource pool, CityService cityService) {
+    public PostDBStore(BasicDataSource pool) {
         this.pool = pool;
-        this.cityService = cityService;
     }
 
     public List<Post> findAll() {
         List<Post> posts = new ArrayList<>();
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement(SELECTALL)) {
+             PreparedStatement ps = cn.prepareStatement(SELECT_ALL)) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
-                    posts.add(addNewPost(it.getInt("id"),
-                            it.getString("name"),
-                            it.getString("description"),
-                            it.getObject("created", LocalDateTime.class),
-                            it.getInt("city_id")));
+                    posts.add(addNewPost(it));
                 }
             }
         } catch (Exception e) {
@@ -86,16 +81,12 @@ public class PostDBStore {
 
     public Post findById(int id) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement(SELECTBYID)
+             PreparedStatement ps =  cn.prepareStatement(SELECT_BY_ID)
         ) {
             ps.setInt(1, id);
             try (ResultSet it = ps.executeQuery()) {
                 if (it.next()) {
-                    return addNewPost(it.getInt("id"),
-                            it.getString("name"),
-                            it.getString("description"),
-                            it.getObject("created", LocalDateTime.class),
-                            it.getInt("city_id"));
+                    return addNewPost(it);
                 }
             }
         } catch (Exception e) {
@@ -104,7 +95,11 @@ public class PostDBStore {
         return null;
     }
 
-    private Post addNewPost(int id, String name, String decsription, LocalDateTime created, int cityId) {
-        return new Post(id, name, decsription, created, cityService.findById(cityId));
+    private Post addNewPost(ResultSet resultSet) throws SQLException {
+        return new Post(resultSet.getInt("id"),
+                resultSet.getString("name"),
+                resultSet.getString("description"),
+                resultSet.getTimestamp("created").toLocalDateTime(),
+                new City(resultSet.getInt("city_id"), ""));
     }
 }
