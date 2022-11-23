@@ -78,15 +78,4 @@ public class CandidateController {
                 .contentType(MediaType.parseMediaType("application/octet-stream"))
                 .body(new ByteArrayResource(candidate.getPhoto()));
     }
-
-//    @RequestMapping(value = "/image-response-entity", method = RequestMethod.GET)
-//    public ResponseEntity<byte[]> getImageAsResponseEntity() {
-//        HttpHeaders headers = new HttpHeaders();
-//        InputStream in = servletContext.getResourceAsStream("/WEB-INF/images/image-example.jpg");
-//        byte[] media = IOUtils.toByteArray(in);
-//        headers.setCacheControl(CacheControl.noCache().getHeaderValue());
-//
-//        ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(media, headers, HttpStatus.OK);
-//        return responseEntity;
-//    }
 }
