@@ -1,7 +1,6 @@
 package dreamjob.model;
 
 import java.io.Serializable;
-import java.sql.ResultSet;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -14,17 +13,7 @@ public class Post implements Serializable {
     private boolean visible;
     private City city;
 
-    public Post(ResultSet resultSet) {
-    }
-
-    public Post(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public Post(int id, LocalDateTime created) {
-        this.id = id;
-        this.created = created;
+    public Post() {
     }
 
     public Post(int id, String name, String description, LocalDateTime created) {
@@ -39,15 +28,6 @@ public class Post implements Serializable {
         this.name = name;
         this.description = description;
         this.created = created;
-        this.city = city;
-    }
-
-    public Post(int id, String name, String description, LocalDateTime created, boolean visible, City city) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.created = created;
-        this.visible = visible;
         this.city = city;
     }
 

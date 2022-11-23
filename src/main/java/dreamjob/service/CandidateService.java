@@ -1,24 +1,32 @@
 package dreamjob.service;
 
 import dreamjob.model.Candidate;
-import dreamjob.store.CandidateStore;
+import dreamjob.store.CandidateDBStore;
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
+import java.util.List;
 
 @ThreadSafe
 @Service
 public class CandidateService {
 
-    private final CandidateStore candidateStore;
+    private final CandidateDBStore candidateStore;
+    private final CityService cityService;
 
-    public CandidateService(CandidateStore store) {
-        this.candidateStore = store;
+    public CandidateService(CandidateDBStore candidateStore, CityService cityService) {
+        this.candidateStore = candidateStore;
+        this.cityService = cityService;
     }
 
-    public Collection<Candidate> findAll() {
-        return candidateStore.findAll();
+    public List<Candidate> findAll() {
+        List<Candidate> candidates = candidateStore.findAll();
+        candidates.forEach(
+                post -> post.setCity(
+                        cityService.findById(post.getCity().getId())
+                )
+        );
+        return candidates;
     }
 
     public void add(Candidate candidate) {
