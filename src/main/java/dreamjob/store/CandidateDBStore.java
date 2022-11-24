@@ -19,8 +19,8 @@ public class CandidateDBStore {
     private static final Logger LOG = LoggerFactory.getLogger(PostDBStore.class.getName());
     private static final String SELECT_ALL = "SELECT * FROM candidate";
     private static final String SELECT_BY_ID = "SELECT * FROM candidate WHERE id = ?";
-    private static final String INSERT = "INSERT INTO candidate(name, description, created, city_id) "
-            + "VALUES (?, ?, ?, ?)";
+    private static final String INSERT = "INSERT INTO candidate(name, description, created, city_id, photo_name) "
+            + "VALUES (?, ?, ?, ?, ?)";
     private static final String UPDATE = "UPDATE candidate SET "
             + "name = ?, description = ?, created = ?, city_id = ?,  photo_name= ? WHERE id = ?";
 
@@ -52,6 +52,7 @@ public class CandidateDBStore {
             ps.setString(2, candidate.getDescription());
             ps.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
             ps.setInt(4, candidate.getCity().getId());
+            ps.setBytes(5, candidate.getPhoto());
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
                 if (id.next()) {
