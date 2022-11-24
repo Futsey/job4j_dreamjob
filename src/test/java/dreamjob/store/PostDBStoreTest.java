@@ -3,7 +3,7 @@ package dreamjob.store;
 import dreamjob.Main;
 import dreamjob.model.City;
 import dreamjob.model.Post;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
@@ -19,7 +19,7 @@ public class PostDBStoreTest {
                 "Junior Java Job",
                 "Weak Programmer",
                 LocalDateTime.now(),
-                new City(1, "Москва"));
+                new City(1, "РњРѕСЃРєРІР°"));
         store.add(post);
         Post postInDb = store.findById(post.getId());
         assertThat(postInDb.getName(), is(post.getName()));
@@ -32,7 +32,7 @@ public class PostDBStoreTest {
                 "Junior Java Job",
                 "Weak Programmer",
                 LocalDateTime.now(),
-                new City(1, "Москва"));
+                new City(1, "РњРѕСЃРєРІР°"));
         store.add(post);
         Post postInDb = store.findById(post.getId());
         assertThat(postInDb.getId(), is(post.getId()));
@@ -45,7 +45,7 @@ public class PostDBStoreTest {
                 "Junior Java Job",
                 "Weak Programmer",
                 LocalDateTime.now(),
-                new City(1, "Москва"));
+                new City(1, "РњРѕСЃРєРІР°"));
         store.add(post);
         post.setName("Weak Junior");
         store.update(post);
@@ -60,7 +60,7 @@ public class PostDBStoreTest {
                 "Junior Java Job",
                 "Weak Programmer",
                 LocalDateTime.now(),
-                new City(1, "Москва"));
+                new City(1, "РњРѕСЃРєРІР°"));
         store.add(post);
         post.setDescription("Really Weak Junior");
         store.update(post);
@@ -75,9 +75,9 @@ public class PostDBStoreTest {
                 "Junior Java Job",
                 "Weak Programmer",
                 LocalDateTime.now(),
-                new City(1, "Москва"));
+                new City(1, "РњРѕСЃРєРІР°"));
         store.add(post);
-        post.setCity(new City(2, "СПб"));
+        post.setCity(new City(2, "РЎРџР±"));
         store.update(post);
         Post postInDb = store.findById(post.getId());
         assertThat(postInDb.getCity(), is(post.getCity()));
@@ -90,12 +90,12 @@ public class PostDBStoreTest {
                 "Junior Java Job",
                 "Weak Programmer",
                 LocalDateTime.now(),
-                new City(1, "Москва"));
+                new City(1, "РњРѕСЃРєРІР°"));
         Post post2 = new Post(2,
                 "Middle Java Job",
                 "Average Programmer",
                 LocalDateTime.now(),
-                new City(2, "СПб"));
+                new City(2, "РЎРџР±"));
         store.add(post);
         store.add(post2);
         Post postInDb = store.findById(post.getId());
