@@ -101,6 +101,4 @@ public class PostDBStore {
                 resultSet.getTimestamp("created").toLocalDateTime(),
                 new City(resultSet.getInt("city_id"), ""));
     }
-
-
 }

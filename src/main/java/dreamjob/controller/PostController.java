@@ -3,7 +3,6 @@ package dreamjob.controller;
 import dreamjob.model.Post;
 import dreamjob.service.CityService;
 import dreamjob.service.PostService;
-import dreamjob.store.PostDBStore;
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
