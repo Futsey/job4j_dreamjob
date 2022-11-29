@@ -19,6 +19,7 @@ public class UserDBStore {
     private static final Logger LOG = LoggerFactory.getLogger(UserDBStore.class.getName());
     private static final String SELECT_ALL = "SELECT * FROM users";
     private static final String SELECT_BY_ID = "SELECT * FROM users WHERE id = ?";
+    private static final String SELECT_BY_EMAIL_AND_PASSWORD = "SELECT * FROM users WHERE email = ? AND password = ?";
     private static final String INSERT = "INSERT INTO users(email, password, created)"
             + "VALUES (?, ?, ?)";
     private static final String UPDATE = "UPDATE users SET email = ?, password = ? WHERE id = ?";
@@ -83,6 +84,24 @@ public class UserDBStore {
              PreparedStatement ps =  cn.prepareStatement(SELECT_BY_ID)
         ) {
             ps.setInt(1, id);
+            try (ResultSet it = ps.executeQuery()) {
+                if (it.next()) {
+                    notNullUser = Optional.of(addNewUser(it));
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("Exception: ", e);
+        }
+        return notNullUser;
+    }
+
+    public Optional<User> findUserByEmailAndPassword(String email, String password) {
+        Optional<User> notNullUser = Optional.empty();
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement(SELECT_BY_EMAIL_AND_PASSWORD)
+        ) {
+            ps.setString(1, email);
+            ps.setString(2, password);
             try (ResultSet it = ps.executeQuery()) {
                 if (it.next()) {
                     notNullUser = Optional.of(addNewUser(it));

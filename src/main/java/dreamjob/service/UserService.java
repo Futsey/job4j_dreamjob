@@ -28,4 +28,8 @@ public class UserService {
     public Optional<User> findById(int id) {
         return store.findById(id);
     }
+
+    public Optional<User> findUserByEmailAndPassword(String email, String password) {
+        return store.findUserByEmailAndPassword(email, password);
+    }
 }
