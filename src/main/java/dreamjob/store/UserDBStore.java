@@ -19,9 +19,9 @@ public class UserDBStore {
     private static final Logger LOG = LoggerFactory.getLogger(UserDBStore.class.getName());
     private static final String SELECT_ALL = "SELECT * FROM users";
     private static final String SELECT_BY_ID = "SELECT * FROM users WHERE id = ?";
-    private static final String INSERT = "INSERT INTO users(id, email, user_password, created)"
-            + "VALUES (?, ?, ?, ?)";
-    private static final String UPDATE = "UPDATE users SET email = ?, user_password = ? WHERE id = ?";
+    private static final String INSERT = "INSERT INTO users(email, password, created)"
+            + "VALUES (?, ?, ?)";
+    private static final String UPDATE = "UPDATE users SET email = ?, password = ? WHERE id = ?";
 
     public UserDBStore(BasicDataSource pool) {
         this.pool = pool;
@@ -49,10 +49,9 @@ public class UserDBStore {
              PreparedStatement ps =  cn.prepareStatement(INSERT,
                      PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
-            ps.setInt(1, user.getId());
-            ps.setString(2, user.getEmail());
-            ps.setString(3, user.getPassword());
-            ps.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
+            ps.setString(1, user.getEmail());
+            ps.setString(2, user.getPassword());
+            ps.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
                 if (id.next()) {
@@ -78,20 +77,21 @@ public class UserDBStore {
         }
     }
 
-    public User findById(int id) {
+    public Optional<User> findById(int id) {
+        Optional<User> notNullUser = Optional.empty();
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement(SELECT_BY_ID)
         ) {
             ps.setInt(1, id);
             try (ResultSet it = ps.executeQuery()) {
                 if (it.next()) {
-                    return addNewUser(it);
+                    notNullUser = Optional.of(addNewUser(it));
                 }
             }
         } catch (Exception e) {
             LOG.error("Exception: ", e);
         }
-        return null;
+        return notNullUser;
     }
 
     private User addNewUser(ResultSet resultSet) throws SQLException {

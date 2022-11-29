@@ -31,7 +31,7 @@ public class UserController {
     public String registration(Model model, @ModelAttribute User user) {
         Optional<User> regUser = userService.add(user);
         if (regUser.isEmpty()) {
-            model.addAttribute("ERROR_message_user_exist",
+            model.addAttribute("user_exist",
                     "Пользователь с такой почтой уже существует");
             return "redirect:/fail";
         }
@@ -40,14 +40,14 @@ public class UserController {
 
     @GetMapping("/fail")
     public String fail(Model model) {
-        model.addAttribute("ERROR_message_failed_reg", "Registration failed");
+        model.addAttribute("fail", "Registration failed");
         return "registrationFailed";
     }
 
     @GetMapping("/success")
     public String success(Model model) {
         model.addAttribute("user", new User());
-        model.addAttribute("successful_message_reg", "Registration failed");
+        model.addAttribute("success", "Registration successful");
         return "registrationSuccess";
     }
 }
