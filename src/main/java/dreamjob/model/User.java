@@ -72,11 +72,11 @@ public class User {
             return false;
         }
         User user = (User) o;
-        return Objects.equals(email, user.email);
+        return id == user.id && Objects.equals(email, user.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(email);
+        return Objects.hash(id, email);
     }
 }
