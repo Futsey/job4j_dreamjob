@@ -20,9 +20,9 @@ public class UserDBStore {
     private static final String SELECT_ALL = "SELECT * FROM users";
     private static final String SELECT_BY_ID = "SELECT * FROM users WHERE id = ?";
     private static final String SELECT_BY_EMAIL_AND_PASSWORD = "SELECT * FROM users WHERE email = ? AND password = ?";
-    private static final String INSERT = "INSERT INTO users(email, password, created)"
-            + "VALUES (?, ?, ?)";
-    private static final String UPDATE = "UPDATE users SET email = ?, password = ? WHERE id = ?";
+    private static final String INSERT = "INSERT INTO users(name, email, password, created)"
+            + "VALUES (?, ?, ?, ?)";
+    private static final String UPDATE = "UPDATE users SET name = ?, email = ?, password = ? WHERE id = ?";
 
     public UserDBStore(BasicDataSource pool) {
         this.pool = pool;
@@ -50,9 +50,10 @@ public class UserDBStore {
              PreparedStatement ps =  cn.prepareStatement(INSERT,
                      PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
-            ps.setString(1, user.getEmail());
-            ps.setString(2, user.getPassword());
-            ps.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getPassword());
+            ps.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
                 if (id.next()) {
@@ -69,9 +70,10 @@ public class UserDBStore {
     public void update(User user) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement(UPDATE)) {
-            ps.setString(1, user.getEmail());
-            ps.setString(2, user.getPassword());
-            ps.setInt(3, user.getId());
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getPassword());
+            ps.setInt(4, user.getId());
             ps.execute();
         } catch (Exception e) {
             LOG.error("Exception: ", e);
@@ -115,6 +117,7 @@ public class UserDBStore {
 
     private User addNewUser(ResultSet resultSet) throws SQLException {
         return new User(resultSet.getInt("id"),
+                resultSet.getString("name"),
                 resultSet.getString("email"),
                 resultSet.getString("password"),
                 resultSet.getTimestamp("created").toLocalDateTime());

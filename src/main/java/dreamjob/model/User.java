@@ -6,6 +6,7 @@ import java.util.Objects;
 public class User {
 
     private int id;
+    private String name;
     private String email;
     private String password;
     private LocalDateTime created;
@@ -24,8 +25,22 @@ public class User {
         this.password = password;
     }
 
+    public User(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+
     public User(int id, String email, String password, LocalDateTime created) {
         this.id = id;
+        this.email = email;
+        this.password = password;
+        this.created = created;
+    }
+
+    public User(int id, String name, String email, String password, LocalDateTime created) {
+        this.id = id;
+        this.name = name;
         this.email = email;
         this.password = password;
         this.created = created;
@@ -37,6 +52,14 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -78,5 +101,10 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hash(id, email);
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }
