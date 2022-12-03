@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 
+import static dreamjob.utils.HttpSessionUtil.setGuest;
+
 @ThreadSafe
 @Controller
 public class PostController {
@@ -31,12 +33,7 @@ public class PostController {
     public String posts(Model model, HttpSession session) {
         model.addAttribute("posts", postService.findAll());
         model.addAttribute("cities", cityService.getAllCities());
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setName("Гость");
-        }
-        model.addAttribute("user", user);
+        setGuest(model, session);
         return "posts";
     }
 
@@ -45,12 +42,7 @@ public class PostController {
         model.addAttribute("post",
                 new Post(0, "Введите наименование вакансии", "Введите описание вакансии", LocalDateTime.now()));
         model.addAttribute("cities", cityService.getAllCities());
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setName("Гость");
-        }
-        model.addAttribute("user", user);
+        setGuest(model, session);
         return "addPost";
     }
 
@@ -84,12 +76,7 @@ public class PostController {
     public String formUpdatePost(Model model, @PathVariable("postId") int id, HttpSession session) {
         model.addAttribute("post", postService.findById(id));
         model.addAttribute("cities", cityService.getAllCities());
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setName("Гость");
-        }
-        model.addAttribute("user", user);
+        setGuest(model, session);
         return "updatePost";
     }
 

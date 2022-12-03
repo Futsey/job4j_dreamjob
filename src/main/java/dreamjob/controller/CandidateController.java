@@ -4,6 +4,7 @@ import dreamjob.model.Candidate;
 import dreamjob.model.User;
 import dreamjob.service.CandidateService;
 import dreamjob.service.CityService;
+import dreamjob.utils.HttpSessionUtil;
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,8 @@ import org.springframework.http.ResponseEntity;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDateTime;
+
+import static dreamjob.utils.HttpSessionUtil.setGuest;
 
 @ThreadSafe
 @Controller
@@ -36,12 +39,7 @@ public class CandidateController {
         model.addAttribute("candidate",
                 new Candidate(0, "Введите имя кандидата", "Заполните описание", LocalDateTime.now()));
         model.addAttribute("cities", cityService.getAllCities());
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setName("Гость");
-        }
-        model.addAttribute("user", user);
+        setGuest(model, session);
         return "addCandidate";
     }
 
@@ -49,12 +47,7 @@ public class CandidateController {
     public String candidates(Model model, HttpSession session) {
         model.addAttribute("candidates", candidateService.findAll());
         model.addAttribute("cities", cityService.getAllCities());
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setName("Гость");
-        }
-        model.addAttribute("user", user);
+        setGuest(model, session);
         return "candidates";
     }
 
@@ -72,11 +65,7 @@ public class CandidateController {
         model.addAttribute("candidates", candidateService.findById(id));
         model.addAttribute("cities", cityService.getAllCities());
         User user = (User) session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setName("Гость");
-        }
-        model.addAttribute("user", user);
+        setGuest(model, session);
         return "updateCandidate";
     }
 
