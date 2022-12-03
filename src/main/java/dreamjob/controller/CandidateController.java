@@ -4,7 +4,6 @@ import dreamjob.model.Candidate;
 import dreamjob.model.User;
 import dreamjob.service.CandidateService;
 import dreamjob.service.CityService;
-import dreamjob.utils.HttpSessionUtil;
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +19,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
-import static dreamjob.utils.HttpSessionUtil.setGuest;
+import static dreamjob.util.HttpSessionUtil.setGuest;
 
 @ThreadSafe
 @Controller

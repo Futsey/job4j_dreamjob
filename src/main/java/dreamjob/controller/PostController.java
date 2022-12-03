@@ -1,7 +1,6 @@
 package dreamjob.controller;
 
 import dreamjob.model.Post;
-import dreamjob.model.User;
 import dreamjob.service.CityService;
 import dreamjob.service.PostService;
 import net.jcip.annotations.ThreadSafe;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 
-import static dreamjob.utils.HttpSessionUtil.setGuest;
+import static dreamjob.util.HttpSessionUtil.setGuest;
 
 @ThreadSafe
 @Controller

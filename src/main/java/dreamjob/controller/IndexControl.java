@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpSession;
 
-import static dreamjob.utils.HttpSessionUtil.setGuest;
+import static dreamjob.util.HttpSessionUtil.setGuest;
 
 @ThreadSafe
 @Controller
