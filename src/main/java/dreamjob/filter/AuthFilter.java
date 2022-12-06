@@ -5,21 +5,24 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 @Component
 public class AuthFilter implements Filter {
 
-    private static final String MAIN_PAIGE = "index";
-    private static final String LOGIN = "login";
-    private static final String CANDIDATES = "candidates";
-    private static final String POSTS = "posts";
-    private static final String ADD_CANDIDATE = "formAddCandidate";
-    private static final String ADD_POST = "formAddPost";
-    private static final String ADD_USER = "formAddUser";
-    private static final String UPDATE_CANDIDATE = "updateCandidate";
-    private static final String UPDATE_USER = "updateUser";
-    private static final String SUCCESS = "registrationSuccess";
-    private static final String FAIL = "registrationFail";
+    String[] templatesArr = {"index", "login", "candidates", "posts", "formAddCandidate",
+            "formAddPost", "formAddUser", "updateCandidate", "updateUser", "registrationSuccess", "registrationFail"};
+
+
+    private Set<String> templatesToSet() {
+        return new HashSet<String>(Arrays.asList(templatesArr));
+    }
+
+    private boolean checkSet(HashSet<String> templateSet, String uri) {
+        return templateSet.stream().anyMatch(setEl -> setEl.contains(uri));
+    }
 
     @Override
     public void doFilter(
@@ -29,17 +32,8 @@ public class AuthFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         String uri = req.getRequestURI();
-        if (uri.endsWith(MAIN_PAIGE)
-                || uri.endsWith(LOGIN)
-                || uri.endsWith(CANDIDATES)
-                || uri.endsWith(POSTS)
-                || uri.endsWith(ADD_CANDIDATE)
-                || uri.endsWith(ADD_POST)
-                || uri.endsWith(ADD_USER)
-                || uri.endsWith(UPDATE_CANDIDATE)
-                || uri.endsWith(UPDATE_USER)
-                || uri.endsWith(SUCCESS)
-                || uri.endsWith(FAIL)) {
+        templatesToSet();
+        if (checkSet((HashSet<String>) templatesToSet(), uri)) {
             chain.doFilter(req, res);
             return;
         }
