@@ -21,7 +21,7 @@ public class AuthFilter implements Filter {
     }
 
     private boolean checkSet(HashSet<String> templateSet, String uri) {
-        return templateSet.stream().anyMatch(setEl -> setEl.contains(uri));
+        return templateSet.stream().anyMatch(setEl -> setEl.endsWith(uri));
     }
 
     @Override
