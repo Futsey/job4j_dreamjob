@@ -5,23 +5,17 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
 @Component
 public class AuthFilter implements Filter {
 
-    String[] templatesArr = {"index", "login", "candidates", "posts", "formAddCandidate",
-            "formAddPost", "formAddUser", "updateCandidate", "updateUser", "registrationSuccess", "registrationFail"};
-
-
-    private Set<String> templatesToSet() {
-        return new HashSet<String>(Arrays.asList(templatesArr));
-    }
+    private static final Set<String> TEMPLATES_SET = Set.of("index", "login", "candidates", "posts", "formAddCandidate",
+            "formAddPost", "formAddUser", "updateCandidate", "updateUser", "registrationSuccess", "registrationFail");
 
     private boolean checkSet(HashSet<String> templateSet, String uri) {
-        return templateSet.stream().anyMatch(setEl -> setEl.endsWith(uri));
+        return templateSet.stream().anyMatch(uri::endsWith);
     }
 
     @Override
@@ -32,8 +26,7 @@ public class AuthFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         String uri = req.getRequestURI();
-        templatesToSet();
-        if (checkSet((HashSet<String>) templatesToSet(), uri)) {
+        if (checkSet((HashSet<String>) TEMPLATES_SET, uri)) {
             chain.doFilter(req, res);
             return;
         }
