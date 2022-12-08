@@ -14,8 +14,8 @@ public class AuthFilter implements Filter {
     private static final Set<String> TEMPLATES_SET = Set.of("index", "login", "candidates", "posts", "formAddCandidate",
             "formAddPost", "formAddUser", "updateCandidate", "updateUser", "registrationSuccess", "registrationFail");
 
-    private boolean checkSet(HashSet<String> templateSet, String uri) {
-        return templateSet.stream().anyMatch(uri::endsWith);
+    private boolean checkSet(String uri) {
+        return TEMPLATES_SET.stream().anyMatch(uri::endsWith);
     }
 
     @Override
@@ -26,7 +26,7 @@ public class AuthFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         String uri = req.getRequestURI();
-        if (checkSet((HashSet<String>) TEMPLATES_SET, uri)) {
+        if (checkSet(uri)) {
             chain.doFilter(req, res);
             return;
         }
