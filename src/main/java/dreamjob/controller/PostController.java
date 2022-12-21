@@ -60,7 +60,6 @@ public class PostController {
 
     /**
      * Метод для обработки HttpRequest`а силами Spring с автоматическим созданием нового экземпляра Post
-     * TO DO: реализовать генерацию id (по согласованию с ментором)
      * @param post
      * @return
      */
