@@ -38,7 +38,7 @@ class PostControllerTest {
                 postService,
                 cityService
         );
-        String page = postController.posts(model,session);
+        String page = postController.posts(model, session);
         verify(model).addAttribute("posts", posts);
         assertThat(page, is("posts"));
     }
